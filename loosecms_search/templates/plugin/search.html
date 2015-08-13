@@ -1,0 +1,112 @@
+{% load staticfiles %}
+{% load more_like_this %}
+<div class="row">
+    <div class="col-lg-12">
+        <form role="form" method="get" action=".">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            {{ form.q }}
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <hr/>
+                        <label>Αναζήτηση σε:</label>
+                        <div class="input-group">
+                            {% for checkbox in form.ts_models %}
+                                <label class="checkbox-inline">
+                                    {% if checkbox.is_checked %}
+                                        <input type="checkbox" checked="checked" name="{{ checkbox.name }}" value="{{ checkbox.choice_value }}"> {{ checkbox.choice_label }}
+                                    {% else %}
+                                        <input type="checkbox" name="{{ checkbox.name }}" value="{{ checkbox.choice_value }}"> {{ checkbox.choice_label }}
+                                    {% endif %}
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <br/>
+                        <label>Ημερομηνία:</label>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    {{ form.start_date }}
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class='input-group date' id='datetimepicker2'>
+                                    {{ form.end_date }}
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% if query %}
+    <div class="row">
+        <div class="col-lg-12">
+            {% if page.paginator.count != 0 %}
+                {% if page.paginator.count != 1 %}
+                    <p class="bg-info text-center">Βρέθηκαν {{ page.paginator.count }} αποτελέσματα.</p>
+                {% else %}
+                    <p class="bg-info text-center">Βρέθηκε {{ page.paginator.count }} αποτελέσμα.</p>
+                {% endif %}
+                <hr/>
+                <div class="panel-group" id="results">
+                    {% for result in page.object_list %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#results" href="#collapse{{ forloop.counter }}">
+                                    {{ forloop.counter }}. {{ result.object.title}}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    {{ result.object.body|truncatewords_html:10|safe }}
+                                    <br/>
+                                    <p><a class="btn btn-primary" href="{% url 'info' result.object.manager.page.slug result.object.category.slug result.object.slug %}">Δείτε περισσότερα &raquo;</a></p>
+                                    {% comment "To many hits to database" %}
+                                        {% more_like_this result.object as related_content limit 5 %}
+                                        {% if related_content %}
+                                            <div id="related_search" class="well well-sm">
+                                                <h6>Περισσότερα αποτελέσματα</h6>
+                                                    <ul>
+                                                        {% for related in related_content %}
+                                                            <li><a href="{% url 'info' related.object.manager.page.slug related.object.category.slug related.object.slug %}">{{ related.object.title }}</a></li>
+                                                        {% endfor %}
+                                                    </ul>
+                                            </div>
+                                        {% endif %}
+                                    {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if page.has_previous or page.has_next %}
+                    <div>
+                        {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Προηγούμενη{% if page.has_previous %}</a>{% endif %}
+                        |
+                        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Επόμενη &raquo;{% if page.has_next %}</a>{% endif %}
+                    </div>
+                {% endif %}
+            {% else %}
+                <p class="bg-info text-center">Δεν βρέθηκαν αποτελέσματα.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
