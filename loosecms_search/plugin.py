@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponse
 from django.contrib import admin
+from django.http import HttpResponse
+from django.utils.translation import ugettext_lazy as _
+
 
 from .views import TsSearchView
 from .forms import *
