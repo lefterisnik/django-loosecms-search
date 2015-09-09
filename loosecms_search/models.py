@@ -3,10 +3,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.db import models
 from haystack.forms import model_choices
+
 from loosecms.models import Plugin
 
 
 class SearchManager(Plugin):
+    default_type = 'SearchManagerPlugin'
+
     title = models.CharField(_('title'), max_length=200,
                              help_text=_('Give the name of the search manager/'))
     ctime = models.DateTimeField(editable=False, default=timezone.now)

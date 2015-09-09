@@ -17,17 +17,14 @@ class SearchInline(admin.StackedInline):
     extra = 1
 
 
-class SearchPlugin(PluginModelAdmin):
+class SearchManagerPlugin(PluginModelAdmin):
     model = SearchManager
     name = _('Search')
-    form = SearchManagerForm
     template = "plugin/search.html"
     plugin = True
     inlines = [
         SearchInline,
     ]
-    extra_initial_help = None
-    fields = ('type', 'placeholder', 'title', 'published')
 
     def render(self, context, manager):
         searches = ((search.category, search.title) for search in Search.objects.filter(manager=manager))
@@ -35,15 +32,4 @@ class SearchPlugin(PluginModelAdmin):
         searchview.set_choices(searches)
         return HttpResponse(searchview.__call__(context['request'])).content
 
-    def get_changeform_initial_data(self, request):
-        initial = {}
-        if self.extra_initial_help:
-            initial['type'] = self.extra_initial_help['type']
-            initial['placeholder'] = self.extra_initial_help['placeholder']
-            initial['manager'] = self.extra_initial_help['page']
-
-            return initial
-        else:
-            return {'type': 'SearchPlugin'}
-
-plugin_pool.register_plugin(SearchPlugin)
+plugin_pool.register_plugin(SearchManagerPlugin)

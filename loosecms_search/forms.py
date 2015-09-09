@@ -3,7 +3,7 @@ from django import forms
 from django.db import models
 from haystack.forms import SearchForm
 from .models import *
-from loosecms.forms import PluginForm
+
 
 class TsSearchForm(SearchForm):
     q = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'search', 'placeholder': 'Αναζήτηση'}))
@@ -44,10 +44,4 @@ class TsSearchForm(SearchForm):
             sqs = sqs.models(*self.get_models())
 
         return sqs
-
-
-class SearchManagerForm(PluginForm):
-
-    class Meta(PluginForm.Meta):
-        model = SearchManager
 
