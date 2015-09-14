@@ -77,7 +77,7 @@
                                 <div class="panel-body">
                                     {{ result.object.body|truncatewords_html:10|safe }}
                                     <br/>
-                                    <p><a class="btn btn-primary" href="{% url 'info' result.object.manager.page.slug result.object.category.slug result.object.slug %}">Δείτε περισσότερα &raquo;</a></p>
+                                    <p><a class="btn btn-primary" href="{% url 'info' result.object.manager.page.slug result.object.slug %}">Δείτε περισσότερα &raquo;</a></p>
                                     {% comment "To many hits to database" %}
                                         {% more_like_this result.object as related_content limit 5 %}
                                         {% if related_content %}
@@ -85,7 +85,7 @@
                                                 <h6>Περισσότερα αποτελέσματα</h6>
                                                     <ul>
                                                         {% for related in related_content %}
-                                                            <li><a href="{% url 'info' related.object.manager.page.slug related.object.category.slug related.object.slug %}">{{ related.object.title }}</a></li>
+                                                            <li><a href="{% url 'info' related.object.manager.page.slug related.object.slug %}">{{ related.object.title }}</a></li>
                                                         {% endfor %}
                                                     </ul>
                                             </div>
