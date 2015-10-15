@@ -8,35 +8,93 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-05 13:48+0200\n"
+"POT-Creation-Date: 2015-10-15 19:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:10 models.py:25
+#: apps.py:8
+msgid "Loose CMS Plugin - Search"
+msgstr "Loose CMS Plugin -  Αναζήτηση"
+
+#: forms.py:17 plugin.py:21
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: forms.py:18
+msgid "From"
+msgstr "Από"
+
+#: forms.py:19
+msgid "Until"
+msgstr "Μέχρι"
+
+#: models.py:14 models.py:27
 msgid "title"
 msgstr "τίτλος"
 
-#: models.py:11
-msgid "Give the name of the search manager/"
+#: models.py:15
+#, fuzzy
+#| msgid "Give the name of the search manager/"
+msgid "Give the name of the search manager."
 msgstr "Δώστε το όνομα του διαχειριστή αναζήτησης"
 
-#: models.py:16
-msgid "published"
-msgstr "δημοσίευση"
-
-#: models.py:26
+#: models.py:28
 msgid "Give the name of search box."
 msgstr "Δώστε το τίτλο που θα έχει το πεδίο αναζήτησης."
 
-#: models.py:27
+#: models.py:29
 msgid "category"
 msgstr "κατηγορία"
 
-#: models.py:28
+#: models.py:30
 msgid "Select the model for searching."
 msgstr "Επιλέξτε το μοντέλο για το οποίο θα πραγματοποιηθεί το indexing."
+
+#: models.py:41
+msgid "In this manager is already exist this category."
+msgstr "Σε αυτόν το διαχειριστη υπάρχει ήδη η συγκεκριμένη κατηγορία."
+
+#: models.py:45
+msgid "In this manager is already exist this title."
+msgstr "Σε αυτόν το διαχειριστή υπάρχει ήδη ο συγκεκριμένος τίτλος."
+
+#: templates/plugin/search.html:17
+msgid "Search in:"
+msgstr "Αναζήτηση σε:"
+
+#: templates/plugin/search.html:30
+msgid "Date:"
+msgstr "Ημερομηνία:"
+
+#: templates/plugin/search.html:60
+#, python-format
+msgid "Found %(counter)s result."
+msgid_plural "Found %(counter)s results."
+msgstr[0] "Βρέθηκε %(counter)s αποτέλεσμα."
+msgstr[1] "Βρέθηκαν %(counter)s αποτελέσματα."
+
+#: templates/plugin/search.html:77
+msgid "View more"
+msgstr "Δείτε περισσότερα"
+
+#: templates/plugin/search.html:82
+msgid "More results"
+msgstr "Περισσότερα αποτελέσματα"
+
+#: templates/plugin/search.html:98
+msgid "Previous"
+msgstr "Προηγούμενη"
+
+#: templates/plugin/search.html:100
+msgid "Mext"
+msgstr "Επόμενη"
+
+#: templates/plugin/search.html:104
+msgid "No results found."
+msgstr "Δεν βρέθηκαν αποτελέσματα"

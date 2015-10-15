@@ -1,5 +1,4 @@
-{% load staticfiles %}
-{% load more_like_this %}
+{% load i18n staticfiles more_like_this %}
 <div class="row">
     <div class="col-lg-12">
         <form role="form" method="get" action=".">
@@ -15,7 +14,7 @@
                             </span>
                         </div>
                         <hr/>
-                        <label>Αναζήτηση σε:</label>
+                        <label>{% trans 'Search in:' %}</label>
                         <div class="input-group">
                             {% for checkbox in form.models %}
                                 <label class="checkbox-inline">
@@ -28,7 +27,7 @@
                             {% endfor %}
                         </div>
                         <br/>
-                        <label>Ημερομηνία:</label>
+                        <label>{% trans 'Date:' %}</label>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class='input-group date' id='datetimepicker1'>
@@ -57,11 +56,9 @@
     <div class="row">
         <div class="col-lg-12">
             {% if page.paginator.count != 0 %}
-                {% if page.paginator.count != 1 %}
-                    <p class="bg-info text-center">Βρέθηκαν {{ page.paginator.count }} αποτελέσματα.</p>
-                {% else %}
-                    <p class="bg-info text-center">Βρέθηκε {{ page.paginator.count }} αποτελέσμα.</p>
-                {% endif %}
+                <p class="bg-info text-center">
+                {% blocktrans count counter=page.paginator.count %}Found {{ counter }} result.{% plural %}Found {{ counter }} results.{% endblocktrans %}
+                </p>
                 <hr/>
                 <div class="panel-group" id="results">
                     {% for result in page.object_list %}
@@ -77,12 +74,12 @@
                                 <div class="panel-body">
                                     {{ result.object.body|truncatewords_html:10|safe }}
                                     <br/>
-                                    <p><a class="btn btn-primary" href="{% url 'info' result.object.manager.page.slug result.object.slug %}">Δείτε περισσότερα &raquo;</a></p>
+                                    <p><a class="btn btn-primary" href="{% url 'info' result.object.manager.page.slug result.object.slug %}">{% trans 'View more' %} &raquo;</a></p>
                                     {% comment "To many hits to database" %}
                                         {% more_like_this result.object as related_content limit 5 %}
                                         {% if related_content %}
                                             <div id="related_search" class="well well-sm">
-                                                <h6>Περισσότερα αποτελέσματα</h6>
+                                                <h6>{% trans 'More results' %}</h6>
                                                     <ul>
                                                         {% for related in related_content %}
                                                             <li><a href="{% url 'info' related.object.manager.page.slug related.object.slug %}">{{ related.object.title }}</a></li>
@@ -98,13 +95,13 @@
                 </div>
                 {% if page.has_previous or page.has_next %}
                     <div>
-                        {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Προηγούμενη{% if page.has_previous %}</a>{% endif %}
+                        {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; {% trans 'Previous' %}{% if page.has_previous %}</a>{% endif %}
                         |
-                        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Επόμενη &raquo;{% if page.has_next %}</a>{% endif %}
+                        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}{% trans 'Mext'%} &raquo;{% if page.has_next %}</a>{% endif %}
                     </div>
                 {% endif %}
             {% else %}
-                <p class="bg-info text-center">Δεν βρέθηκαν αποτελέσματα.</p>
+                <p class="bg-info text-center">{% trans 'No results found.'%}</p>
             {% endif %}
         </div>
     </div>

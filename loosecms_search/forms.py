@@ -14,20 +14,22 @@ class LoosecmsSearchForm(SearchForm):
         self.manager = kwargs.pop('manager', None)
 
         super(LoosecmsSearchForm, self).__init__(*args, **kwargs)
-
+        placeholder_q = _('Search')
+        placeholder_start_date = _('From')
+        placeholder_end_date = _('Until')
         self.fields['q'] = forms.CharField(required=False,
                                            widget=forms.TextInput(attrs={
                                                'class': 'form-control',
                                                'type': 'search',
-                                               'placeholder': 'Αναζήτηση'}))
+                                               'placeholder': placeholder_q}))
         self.fields['start_date'] = forms.DateField(required=False,
                                                     widget=forms.DateInput(attrs={
                                                         'class': 'form-control',
-                                                        'placeholder': 'Από'}))
+                                                        'placeholder': placeholder_start_date}))
         self.fields['end_date'] = forms.DateField(required=False,
                                                   widget=forms.DateInput(attrs={
                                                       'class': 'form-control',
-                                                      'placeholder': 'Μέχρι'}))
+                                                      'placeholder': placeholder_end_date}))
         self.fields['models'] = forms.MultipleChoiceField(required=False,
                                                           choices=get_active_models(self.manager),
                                                           widget=forms.CheckboxSelectMultiple)
