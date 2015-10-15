@@ -17,7 +17,7 @@
                         <hr/>
                         <label>Αναζήτηση σε:</label>
                         <div class="input-group">
-                            {% for checkbox in form.ts_models %}
+                            {% for checkbox in form.models %}
                                 <label class="checkbox-inline">
                                     {% if checkbox.is_checked %}
                                         <input type="checkbox" checked="checked" name="{{ checkbox.name }}" value="{{ checkbox.choice_value }}"> {{ checkbox.choice_label }}

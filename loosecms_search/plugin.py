@@ -3,8 +3,7 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 
-
-from .views import TsSearchView
+from .views import *
 from .forms import *
 from .models import *
 
@@ -27,9 +26,7 @@ class SearchManagerPlugin(PluginModelAdmin):
     ]
 
     def render(self, context, manager):
-        searches = ((search.category, search.title) for search in Search.objects.filter(manager=manager))
-        searchview = TsSearchView(template=self.template, form_class=TsSearchForm)
-        searchview.set_choices(searches)
+        searchview = LoosecmsSearchView(template=self.template, form_class=LoosecmsSearchForm, manager=manager)
         return HttpResponse(searchview.__call__(context['request'])).content
 
 plugin_pool.register_plugin(SearchManagerPlugin)

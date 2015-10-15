@@ -11,7 +11,7 @@ class SearchManager(Plugin):
     default_type = 'SearchManagerPlugin'
 
     title = models.CharField(_('title'), max_length=200,
-                             help_text=_('Give the name of the search manager/'))
+                             help_text=_('Give the name of the search manager.'))
     ctime = models.DateTimeField(editable=False, default=timezone.now)
 
     utime = models.DateTimeField(auto_now=True)

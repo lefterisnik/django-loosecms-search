@@ -1,12 +1,18 @@
 from haystack.views import SearchView
 
-class TsSearchView(SearchView):
+
+class LoosecmsSearchView(SearchView):
+
+    def __init__(self, manager, *args, **kwargs):
+        self.manager = manager
+        super(LoosecmsSearchView, self).__init__(*args, **kwargs)
 
     def build_form(self, form_kwargs=None):
-        form = super(TsSearchView, self).build_form(form_kwargs)
-        form.fields['ts_models'].choices = self.choices
+        kwargs = {
+            'manager': self.manager,
+        }
 
-        return form
+        if form_kwargs:
+            kwargs.update(form_kwargs)
 
-    def set_choices(self, choices):
-        self.choices = choices
+        return super(LoosecmsSearchView, self).build_form(kwargs)
